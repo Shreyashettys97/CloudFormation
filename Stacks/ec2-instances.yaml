@@ -1,0 +1,82 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: >
+  The template is used to create jumpbox and webServer instances.
+#
+#PARAMETERS used to Create Ec2 Instances
+#
+Parameters:
+  PublicSubnet1:
+    Description: The public subnet where webserver1 needs to be created
+    Type: String
+  PublicSubnet2:
+    Description: The public subnet where webserver2 needs to be created
+    Type: String
+  PrivateSubnet:
+    Description: The private subnet where application server needs to be created
+    Type: String
+  PublicSecurityGroup.GroupId:
+    Description: The security group to be configuredinstances
+    Type: String
+  AZ:
+    Description: The availability zone where Ec2 needs to be created
+    Type: String
+  Environment:
+    Description: The application environment
+    Type: String
+  AmiId:
+    Description: ami ID
+    Type: String
+  Ec2InstanceType:
+    Description: The instance Type of ec2
+    Type: String
+  StackName:
+    Description: The Root stack name
+    Type: String
+
+#
+#RESOURCES created
+#
+Resources:
+  WebServer:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType: t2.micro
+      KeyName: Demo
+      ImageId: !Ref AmiId
+      SecurityGroupIds:
+        - !GetAtt PublicSecurityGroup.GroupId
+      SubnetId: !Ref PublicSubnet1
+
+  WebServer1:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType: t2.micro
+      KeyName: Demo
+      ImageId: !Ref AmiId
+      SecurityGroupIds:
+        - !GetAtt PublicSecurityGroup.GroupId
+      SubnetId: !Ref PublicSubnet2
+
+  JumpBox:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType: t2.micro
+      KeyName: Demo
+      ImageId: !Ref AmiId
+      SecurityGroupIds:
+        - !GetAtt PublicSecurityGroup.GroupId
+      SubnetId: !Ref PublicSubnet1
+
+Outputs:
+#EC2 Instances
+  JumpBox:
+    Description: The id of jumpbox ec2
+    Value: !Ref JumpBox
+  WebServer:
+    Description: The id of webServer 
+    Value: !Ref WebServer
+  WebServer1:
+    Description: The id of webServer 
+    Value: !Ref WebServer1
