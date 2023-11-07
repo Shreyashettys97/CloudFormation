@@ -19,20 +19,8 @@ Parameters:
   PublicSecurityGroup.GroupId:
     Description: The security group to be configuredinstances
     Type: String
-  AZ:
-    Description: The availability zone where Ec2 needs to be created
-    Type: String
-  Environment:
-    Description: The application environment
-    Type: String
   AmiId:
     Description: ami ID
-    Type: String
-  Ec2InstanceType:
-    Description: The instance Type of ec2
-    Type: String
-  StackName:
-    Description: The Root stack name
     Type: String
 
 #

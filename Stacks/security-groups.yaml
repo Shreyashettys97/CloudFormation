@@ -1,7 +1,27 @@
-AWSTemplateFormatVersion: '2010-09-09'
+---
+AWSTemplateFormatVersion: "2010-09-09"
 
+Description: >
+  The template is used to create a security groups.
+
+#
+#PARAMETERS used to Create security groups
+#
+Parameters:
+  MyVPC:
+    Description: The AZ of subnet
+    Type: String
+  PublicSecurityGroup.GroupId:
+    Description: The security group to be configuredinstances
+    Type: String
+
+#
+#RESOURCES creation 
+#
 Resources:
-PublicSecurityGroup:
+
+#Security group for jumpbox instances
+  PublicSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
       GroupDescription: Public Security Group
@@ -30,3 +50,15 @@ PublicSecurityGroup:
           FromPort: 22
           ToPort: 22
           SourceSecurityGroupId: !GetAtt PublicSecurityGroup.GroupId
+
+#
+#OUTPUT
+#
+Outputs:
+#Secuirty groups
+  PublicSecurityGroup:
+     Description: The public subnet
+     Value: !Ref PublicSecurityGroup
+  PrivateSecurityGroup:
+     Description: The private subnet
+     Value: !Ref PrivateSecurityGroup
